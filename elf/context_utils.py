@@ -5,11 +5,14 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
+# Modified by GaoFangshu on July 12, 2017.
+
 import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'rlpytorch'))
 from args_utils import ArgsProvider, args_loader
+# Can be `from ..rlpytorch.args_utils import ArgsProvider, args_loader`
 
 class ContextParams:
     def __init__(self):
