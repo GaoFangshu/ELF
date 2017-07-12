@@ -13,6 +13,30 @@ class ArgsProvider:
         self._more_params = more_params
         self._on_get_params = on_get_params
         self._arg_keys = list(list(zip(*self._define_params))[0])
+
+        # e.g.
+        #
+        # define_params = [
+        #     ("num_games", 1024),
+        #     ("batchsize", 128),
+        #     ("game_multi", dict(type=int, default=None)),
+        #     ("T", 6),
+        #     ("eval", dict(action="store_true")),
+        #     ("wait_per_group", dict(action="store_true")),
+        #     ("verbose_comm", dict(action="store_true")),
+        #     ("verbose_collector", dict(action="store_true"))
+        # ]
+        #
+        # self._arg_keys = [
+        #     'num_games',
+        #     'batchsize',
+        #     'game_multi',
+        #     'T',
+        #     'eval',
+        #     'wait_per_group',
+        #     'verbose_comm',
+        #     'verbose_collector']
+
         self._child_providers = child_providers
         self._call_from = call_from
 
@@ -29,6 +53,7 @@ class ArgsProvider:
             child_provider.init(parser)
 
     def set(self, args, **kwargs):
+        # Add other parameters
         ''' kwargs is used to override any existing args '''
         # First check all the children.
         for child_provider in self._child_providers:
