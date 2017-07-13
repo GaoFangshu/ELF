@@ -37,7 +37,9 @@ class ArgsProvider:
         self._define_args = define_args
         self._more_args = more_args
         self._on_get_args = on_get_args
-        self._arg_keys = list(list(zip(*self._define_args))[0])  # e.g.
+
+        self._arg_keys = list(list(zip(*self._define_args))[0])
+        # e.g.
         #
         # define_params = [
         #     ("num_games", 1024),
