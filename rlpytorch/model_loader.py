@@ -5,14 +5,14 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-from args_utils import ArgsProvider
+from .args_utils import ArgsProvider
 
 class ModelLoader:
     def __init__(self, model_class):
         self.model_class = model_class
         self.args = ArgsProvider(
             call_from = self,
-            define_params = [
+            define_args = [
                 ("gpu", dict(type=str, help="gpu to use", default=None)),
                 ("load", dict(type=str, help="load model", default=None))
             ]
