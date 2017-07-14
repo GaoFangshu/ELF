@@ -30,7 +30,7 @@ class ArgsProvider:
             on_get_args(lambda function that takes an argument of type :class:`ArgsProvider`): a callback function that will
               be invoked after the arguments are read from the command line.
             call_from(parent class instance): The parent class instance that calls :func:`__init__``. :class:`ArgsProvider` uses
-              the class name of ``call_from`` as the group name of the arguments specified by ``define_params``.
+              the class name of ``call_from`` as the group name of the arguments specified by ``define_args``.
             child_providers(list of :class:`ArgsProvider`): The current class instance also collects the arguments required by the instances from ``child_providers``.
         '''
 
@@ -97,15 +97,24 @@ class ArgsProvider:
         if self._on_get_args is not None:
             self._on_get_args(args)
 
+    def Load(parser, args_providers, cmd_line=sys.argv[1:]):
+        '''Load args from ``cmd_line``
 
-def args_loader(parser, args_providers, cmd_line=sys.argv[1:]):
-    for provider in args_providers:
-        provider.args.init(parser)
+        Parameters:
+            parser(ArgumentParser): The argument parser.
+            args_providers(list of class instances): List of class instances. Each item has an attribute ``args``. These ``args`` will add arguments to ``parser``.
+            cmd_line(list of str, or str): command line used to load the arguments. If not specified, use ``sys.argv``.
 
-    args = parser.parse_args(cmd_line)
-    print(args)
+        Returns:
+            A class instance whose attributes contain all loaded arguments.
+        '''
+        for provider in args_providers:
+            provider.args.init(parser)
 
-    for provider in args_providers:
-        provider.args.set(args)
+        args = parser.parse_args(cmd_line)
+        print(args)
 
-    return args
+        for provider in args_providers:
+            provider.args.set(args)
+
+        return args
